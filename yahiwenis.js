@@ -1,32 +1,67 @@
-// ===== YAHIWENIS CHOIR WEBSITE =====
+// ===== HAMBURGER MENU =====
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('nav-links');
 
-// Choir information
-const choirName = "Yahiwenis"
-const foundedYear = 2010
-const memberCount = 28
+hamburger.addEventListener('click', function() {
+  navLinks.classList.toggle('open');
+});
 
-// Function to log choir info
-function logChoirInfo(name, year, count) {
-  console.log(`Choir: ${name}`)
-  console.log(`Founded: ${year}`)
-  console.log(`Members: ${count}`)
+// ===== ACTIVE NAV LINK =====
+const currentPage = window.location.href;
+const navItems = document.querySelectorAll('#nav-links a');
+
+navItems.forEach(function(link) {
+  if (link.href === currentPage) {
+    link.style.color = '#5b3a29';
+    link.style.borderBottom = '2px solid #5b3a29';
+  }
+});
+
+// ===== FORM VALIDATION =====
+const contactForm = document.querySelector('.contact-form-wrapper form');
+
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = document.querySelector('#name').value.trim();
+    const email = document.querySelector('#email').value.trim();
+    const message = document.querySelector('#message').value.trim();
+
+    if (name === '') {
+      alert('Please enter your name');
+      return;
+    }
+
+    if (email === '') {
+      alert('Please enter your email');
+      return;
+    }
+
+    if (!email.includes('@')) {
+      alert('Please enter a valid email address');
+      return;
+    }
+
+    if (message === '') {
+      alert('Please enter a message');
+      return;
+    }
+
+    alert('Message sent successfully!');
+    contactForm.reset();
+  });
 }
 
-logChoirInfo(choirName, foundedYear, memberCount)
+// ===== SMOOTH SCROLL =====
+const allLinks = document.querySelectorAll('a[href^="#"]');
 
-// ===== DOM PRACTICE =====
-// Wait for page to fully load before running
-document.addEventListener("DOMContentLoaded", function() {
-  
-  // Select the hero button on home page
-  const heroBtn = document.querySelector(".btn")
-
-  // Only run if button exists on this page
-  if (heroBtn) {
-    heroBtn.addEventListener("click", function() {
-      console.log("Hero button clicked — navigating to about page")
-    })
-  }
-
-})
-
+allLinks.forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
